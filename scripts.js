@@ -59,9 +59,18 @@ let player2 = Player('O')
 boxes.forEach((element) => {
     element.addEventListener('click', () => {
         playTurn(element, player1);
+        boxes.forEach((element) => {
+            element.disabled = true;
+        });
         if (!gameOver(player1)) {
-            botRandomTurn(player2);
-            gameOver(player2);
+            setTimeout(() => {
+                botRandomTurn(player2);
+                if (!gameOver(player2)) {
+                    boxes.forEach((element) => {
+                        element.disabled = false;
+                    });
+                }
+            }, 1000);
         }
     });
 });

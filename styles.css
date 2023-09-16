@@ -83,7 +83,7 @@ h1 {
     margin-top: 20px;
 }
 
-button {
+button:not(.box) {
     width: 150px;
     height: 50px;
     padding: 10px;
@@ -96,7 +96,7 @@ button {
     transition-duration: 0.2s;
 }
 
-button:hover {
+button:not(.box):hover {
     cursor: pointer;
     background-color: #2b008f;
 }
@@ -124,6 +124,8 @@ button:hover {
     align-items: center;
     transition-duration: 0.5s;
     color: rgba(0, 0, 0, 0);
+    border: none;
+    background-color: #fff;
 }
 
 .box:hover {
@@ -154,6 +156,10 @@ button:hover {
     box-shadow: inset var(--thickness) calc(-1*var(--thickness)) #000;
 }
 
+.right.side {
+    box-shadow: inset var(--thickness) 0 #000;
+}
+
 .restart {
-    margin-bottom: 20px;
+    margin-bottom: 10px !important; 
 }
