@@ -98,6 +98,7 @@ button {
 
 button:hover {
     cursor: pointer;
+    background-color: #2b008f;
 }
 
 .game {
@@ -106,7 +107,7 @@ button:hover {
     justify-content: center;
     margin: 50px 0;
     width: 80%;
-    height: 100%;
+    flex: auto;
 }
 
 .row {
