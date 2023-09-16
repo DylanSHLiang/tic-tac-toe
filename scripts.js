@@ -7,9 +7,7 @@ const Player = (symbol) => {
 };
 
 function playTurn(element, player) {
-    if (!element.innerText) {
-        element.innerText = player.symbol;
-    }
+    element.innerText = player.symbol;
 }
 
 function gameOver(player) {
@@ -59,25 +57,27 @@ let player2 = Player('O')
 
 boxes.forEach((element) => {
     element.addEventListener('click', () => {
-        playTurn(element, player1);
-        boxes.forEach((element) => {
-            element.disabled = true;
-        });
-        options.forEach((element) => {
-            element.disabled = true;
-        });
-        if (!gameOver(player1)) {
-            setTimeout(() => {
-                botRandomTurn(player2);
-                if (!gameOver(player2)) {
-                    boxes.forEach((element) => {
+        if (!element.innerText) {
+            playTurn(element, player1);
+            boxes.forEach((element) => {
+                element.disabled = true;
+            });
+            options.forEach((element) => {
+                element.disabled = true;
+            });
+            if (!gameOver(player1)) {
+                setTimeout(() => {
+                    botRandomTurn(player2);
+                    if (!gameOver(player2)) {
+                        boxes.forEach((element) => {
+                            element.disabled = false;
+                        });
+                    }
+                    options.forEach((element) => {
                         element.disabled = false;
                     });
-                }
-                options.forEach((element) => {
-                    element.disabled = false;
-                });
-            }, 1000);
+                }, 1000);
+            }
         }
     });
 });
