@@ -5,27 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
     <link href="./styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <h1>Tic Tac Toe</h1>
-        <button class="pvp">PvP</button>
-        <button class="pve">BOT</button>
+        <div class="options">
+            <button class="pvp">PvP</button>
+            <button class="pve">BOT</button>
+        </div>
         <div class="game">
             <div class="row">
-                <div class="col"></div>
-                <div class="col"></div>
-                <div class="col"></div>
+                <div class="box top leftcorner">X</div>
+                <div class="box left side">O</div>
+                <div class="box bot leftcorner">X</div>
             </div>
             <div class="row">
-                <div class="col"></div>
-                <div class="col"></div>
-                <div class="col"></div>
+                <div class="box top side">O</div>
+                <div class="box middle">X</div>
+                <div class="box bot side">O</div>
             </div>
             <div class="row">
-                <div class="col"></div>
-                <div class="col"></div>
-                <div class="col"></div>
+                <div class="box top rightcorner">X</div>
+                <div class="box right side">O</div>
+                <div class="box bot rightcorner">X</div>
             </div>
         </div>
         <button class="restart">RESTART</button>
