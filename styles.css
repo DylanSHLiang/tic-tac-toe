@@ -122,11 +122,16 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition-duration: 0.3s;
+    transition-duration: 0.5s;
+    color: rgba(0, 0, 0, 0);
 }
 
 .box:hover {
     cursor: pointer;
+}
+
+.box:not(:empty) {
+    color: rgba(0, 0, 0, 1);
 }
 
 .middle {
