@@ -1,5 +1,6 @@
 const boxes = document.querySelectorAll('.box');
 const restart = document.querySelector('.restart');
+const options = document.querySelectorAll('.pvp, .pve, .restart');
 
 const Player = (symbol) => {
     return { symbol };
@@ -62,6 +63,9 @@ boxes.forEach((element) => {
         boxes.forEach((element) => {
             element.disabled = true;
         });
+        options.forEach((element) => {
+            element.disabled = true;
+        });
         if (!gameOver(player1)) {
             setTimeout(() => {
                 botRandomTurn(player2);
@@ -70,6 +74,9 @@ boxes.forEach((element) => {
                         element.disabled = false;
                     });
                 }
+                options.forEach((element) => {
+                    element.disabled = false;
+                });
             }, 1000);
         }
     });
