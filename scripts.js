@@ -68,6 +68,8 @@ let player2 = Player('Player 2', 'O', false);
 let currentPlayer = player1;
 let otherPlayer = player2;
 
+pvp.classList.add('active');
+
 boxes.forEach((element) => {
     element.addEventListener('click', () => {
         if (!element.innerText) {
@@ -128,10 +130,14 @@ pvp.addEventListener('click', () => {
     restartGame();
     player1.isBot = false;
     player2.isBot = false;
+    pvp.classList.add('active');
+    pve.classList.remove('active');
 });
 
 pve.addEventListener('click', () => {
     restartGame();
     player1.isBot = false;
     player2.isBot = true;
+    pve.classList.add('active');
+    pvp.classList.remove('active');
 });

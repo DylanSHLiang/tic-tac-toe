@@ -163,3 +163,11 @@ button:not(.box):hover {
 .restart {
     margin-bottom: 10px !important; 
 }
+
+.restart:active {
+    background-color: #150046 !important;
+}
+
+.active {
+    background-color: #150046 !important;
+}
