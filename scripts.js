@@ -1,46 +1,41 @@
 const boxes = document.querySelectorAll('.box');
 const restart = document.querySelector('.restart');
 const options = document.querySelectorAll('.pvp, .pve, .restart');
+const pvp = document.querySelector('.pvp');
+const pve = document.querySelector('.pve');
 
-const Player = (symbol) => {
-    return { symbol };
+const Player = (name, symbol, isBot) => {
+    return { name, symbol, isBot };
 };
 
 function playTurn(element, player) {
     element.innerText = player.symbol;
 }
 
-function gameOver(player) {
-    if (
-        boxes[0].innerText == player.symbol && 
-        ((boxes[3].innerText == player.symbol && 
-        boxes[6].innerText == player.symbol) || 
-        (boxes[4].innerText == player.symbol && 
-        boxes[8].innerText == player.symbol))
-    ) {
-        return true;
-    } else if (
-        boxes[1].innerText == player.symbol && 
-        (boxes[4].innerText == player.symbol && 
-        boxes[7].innerText == player.symbol)
-    ) {
-        return true;
-    } else if (
-        boxes[2].innerText == player.symbol && 
-        ((boxes[5].innerText == player.symbol && 
-        boxes[8].innerText == player.symbol) || 
-        (boxes[4].innerText == player.symbol && 
-        boxes[6].innerText == player.symbol))
-    ) {
-        return true;
-    } else if (
-        boxes[3].innerText == player.symbol && 
-        (boxes[4].innerText == player.symbol && 
-        boxes[5].innerText == player.symbol)
-    ) {
-        return true;
-    }
-    return false;
+function gameWon(player) {
+    return (
+        (boxes[0].innerText === player.symbol && 
+        ((boxes[3].innerText === player.symbol && 
+        boxes[6].innerText === player.symbol) || 
+        (boxes[4].innerText === player.symbol && 
+        boxes[8].innerText === player.symbol) || 
+        (boxes[1].innerText === player.symbol && 
+        boxes[2].innerText === player.symbol))) || 
+        (boxes[1].innerText === player.symbol && 
+        boxes[4].innerText === player.symbol && 
+        boxes[7].innerText === player.symbol) || 
+        (boxes[2].innerText === player.symbol && 
+        ((boxes[5].innerText === player.symbol && 
+        boxes[8].innerText === player.symbol) || 
+        (boxes[4].innerText === player.symbol && 
+        boxes[6].innerText === player.symbol))) || 
+        (boxes[3].innerText === player.symbol && 
+        boxes[4].innerText === player.symbol && 
+        boxes[5].innerText === player.symbol) || 
+        (boxes[6].innerText === player.symbol && 
+        boxes[7].innerText === player.symbol && 
+        boxes[8].innerText === player.symbol)
+    );
 }
 
 function botRandomTurn(player) {
@@ -52,38 +47,91 @@ function botRandomTurn(player) {
     playTurn(boxes[attempt], player)
 }
 
-let player1 = Player('X');
-let player2 = Player('O')
+function restartGame() {
+    for (let box of boxes) {
+        box.innerText = '';
+    }
+    boxes.forEach((element) => {
+        element.disabled = false;
+    });
+    currentPlayer = player1;
+    otherPlayer = player2;
+}
+
+function displayWinner(player) {
+    window.alert(`${player.name} wins!`);
+}
+
+let player1 = Player('Player 1', 'X', false);
+let player2 = Player('Player 2', 'O', false);
+
+let currentPlayer = player1;
+let otherPlayer = player2;
 
 boxes.forEach((element) => {
     element.addEventListener('click', () => {
         if (!element.innerText) {
-            playTurn(element, player1);
+            playTurn(element, currentPlayer);
             boxes.forEach((element) => {
                 element.disabled = true;
             });
-            options.forEach((element) => {
-                element.disabled = true;
-            });
-            if (!gameOver(player1)) {
-                setTimeout(() => {
-                    botRandomTurn(player2);
-                    if (!gameOver(player2)) {
-                        boxes.forEach((element) => {
+            if (otherPlayer.isBot) {
+                options.forEach((element) => {
+                    element.disabled = true;
+                });
+                if (!gameWon(currentPlayer)) {
+                    setTimeout(() => {
+                        botRandomTurn(otherPlayer);
+                        if (!gameWon(otherPlayer)) {
+                            boxes.forEach((element) => {
+                                element.disabled = false;
+                            });
+                        } else {
+                            setTimeout(() => {
+                                displayWinner(otherPlayer);
+                            }, 300);
+                        }
+                        options.forEach((element) => {
                             element.disabled = false;
                         });
-                    }
+                    }, 1000);
+                } else {
                     options.forEach((element) => {
                         element.disabled = false;
                     });
-                }, 1000);
+                    setTimeout(() => {
+                        displayWinner(currentPlayer);
+                    }, 300);
+                }
+            } else {
+                if (!gameWon(currentPlayer)) {
+                    let temp = currentPlayer;
+                    currentPlayer = otherPlayer;
+                    otherPlayer = temp;
+                    boxes.forEach((element) => {
+                        element.disabled = false;
+                    });
+                } else {
+                    setTimeout(() => {
+                        displayWinner(currentPlayer);
+                    }, 300);
+                }
             }
+            
         }
     });
 });
 
-restart.addEventListener('click', () => {
-    for (let box of boxes) {
-        box.innerText = '';
-    }
-})
+restart.addEventListener('click', () => restartGame());
+
+pvp.addEventListener('click', () => {
+    restartGame();
+    player1.isBot = false;
+    player2.isBot = false;
+});
+
+pve.addEventListener('click', () => {
+    restartGame();
+    player1.isBot = false;
+    player2.isBot = true;
+});
